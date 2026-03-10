@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cadastro</title>
-  <link rel="stylesheet" href="/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrar</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Cadastro</h2>
-    <form method="POST" action="/register">
-      <input type="text" name="username" placeholder="Usuário" required>
-      <input type="password" name="password" placeholder="Senha" required>
-      <button type="submit">Cadastrar</button>
-    </form>
-    <p>Já tem conta? <a href="/login">Entrar</a></p>
-  </div>
+<div class="auth-container">
+<div class="auth-box">
+<h2>Criar conta</h2>
+<form method="POST" action="/register" class="auth-form">
+<input type="text" name="username" placeholder="Usuário" required>
+<input type="password" name="password" placeholder="Senha" required>
+<button type="submit">Cadastrar</button>
+</form>
+<p class="auth-link"><a href="/login">Voltar ao login</a></p>
+</div>
+</div>
 </body>
 </html>

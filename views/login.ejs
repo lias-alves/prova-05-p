@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
-  <link rel="stylesheet" href="/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Login</h2>
-    <form method="POST" action="/login">
-      <input type="text" name="username" placeholder="Usuário" required>
-      <input type="password" name="password" placeholder="Senha" required>
-      <button type="submit">Entrar</button>
-    </form>
-    <p>Não tem conta? <a href="/register">Criar conta</a></p>
-  </div>
+<div class="auth-container">
+<div class="auth-box">
+<h2>Login</h2>
+<form method="POST" action="/login" class="auth-form">
+<input type="text" name="username" placeholder="Usuário" required>
+<input type="password" name="password" placeholder="Senha" required>
+<button type="submit">Entrar</button>
+</form>
+<p class="auth-link">Não tem conta? <a href="/register">Criar conta</a></p>
+</div>
+</div>
 </body>
 </html>

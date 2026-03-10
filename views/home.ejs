@@ -1,13 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
+
 <head>
-  <title>Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventos</title>
   <link rel="stylesheet" href="/css/style.css">
+
 </head>
+
 <body>
   <div class="container">
-    <h2>Bem-vindo!</h2>
-    <p>Você está logado com sucesso.</p>
+    <div class="header-auth"
+      style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h1 style="margin: 0;">📅 Cadastro de Eventos</h1>
+      <div style="text-align: right;">
+        <% if(typeof user !=='undefined' && user) { %>
+          <strong>Bem-vindo, <%= user.username %>!</strong><br>
+          <a href="/logout" style="color: #dc3545; text-decoration: none; font-size: 0.9em; font-weight: bold;">Sair</a>
+          <% } %>
+      </div>
+    </div>
+
+    <!-- Pesquisa -->
+    <form action="/search" method="GET">
+      <input type="text" name="nome" placeholder="Pesquisar evento">
+      <button type="submit">Pesquisar</button>
+    </form>
+    <hr>
+
+    <!-- Formulário Evento -->
+    <form action="/evento" method="POST">
+      <div class="form-group">
+        <input type="text" name="nome" placeholder="Nome do evento" required>
+        <input type="date" name="data" required>
+        <input type="time" name="hora" required>
+        <input type="text" id="cep" name="cep" placeholder="CEP" required>
+        <input type="text" id="endereco" name="endereco" placeholder="Endereço">
+      </div>
+      <div class="form-group" style="margin-top:10px;">
+        <button type="button" onclick="buscarCep()">Buscar CEP</button>
+        <button type="button" onclick="verMapa()">Ver no mapa</button>
+        <button type="submit">Cadastrar Evento</button>
+      </div>
+    </form>
+    <hr>
+
+    <h2>Eventos cadastrados</h2>
+    <div style="text-align: center; margin-bottom: 20px;">
+      <a href="/eventos"><button type="button" style="background-color: #28a745;">Ver todos os eventos (Pesquisa
+          Avançada)</button></a>
+    </div>
+    <ul>
+      <% if(eventos && eventos.length>0){ %>
+        <% eventos.forEach(evento=> { %>
+          <li>
+            <strong>
+              <%= evento.nome %>
+            </strong><br>
+            📅 <%= evento.data %>
+              ⏰ <%= evento.hora %>
+                📍 <%= evento.endereco %>
+                  <div>
+                    <a href="/delete/<%= evento.id %>"><button>Excluir</button></a>
+                    <a target="_blank"
+                      href="https://www.google.com/maps/search/?api=1&query=<%= evento.endereco %>"><button>Ver
+                        localização</button></a>
+                  </div>
+          </li>
+          <% }) %>
+            <% } else { %>
+              <p>Nenhum evento cadastrado</p>
+              <% } %>
+    </ul>
   </div>
+
+  <script>
+    function buscarCep() {
+      let cep = document.getElementById("cep").value;
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(res => res.json())
+        .then(dados => {
+          document.getElementById("endereco").value = dados.logradouro + " " + dados.bairro + " " + dados.localidade;
+        })
+    }
+
+    function verMapa() {
+      let endereco = document.getElementById("endereco").value;
+      window.open(`https://www.google.com/maps/search/?api=1&query=${endereco}`);
+    }
+  </script>
 </body>
+
 </html>

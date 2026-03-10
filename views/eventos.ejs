@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eventos Cadastrados</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+<h1>📋 Eventos Cadastrados</h1>
+<div style="text-align: right; margin-bottom: 20px;">
+    <a href="/home"><button type="button" style="background-color: #6c757d;">Voltar para Home</button></a>
+</div>
+
+<!-- Barra de Pesquisa -->
+<form action="/eventos" method="GET">
+<input type="text" name="nome" placeholder="Pesquisar evento" value="<%= pesquisa %>">
+<button type="submit">Pesquisar</button>
+</form>
+<hr>
+
+<ul>
+<% if(eventos && eventos.length>0){ %>
+<% eventos.forEach(evento => { %>
+<li>
+<strong><%= evento.nome %></strong><br>
+📅 <%= evento.data %>  
+⏰ <%= evento.hora %>  
+📍 <%= evento.endereco %>
+<div>
+<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=<%= evento.endereco %>"><button>Ver localização</button></a>
+</div>
+</li>
+<% }) %>
+<% } else { %>
+<p>Nenhum evento cadastrado</p>
+<% } %>
+</ul>
+
+</div>
+</body>
+</html>

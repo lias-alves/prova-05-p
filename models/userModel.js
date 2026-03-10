@@ -17,18 +17,20 @@ async function createUser(username, password) {
 }
 
 async function loginUser(username, password) {
-  const [rows] = await db.query(
-    'SELECT * FROM users WHERE username = ?',
-    [username]
-  );
+    console.log(`Tentando logar o usuário: ${username}`);
+    const [rows] = await db.query(
+        'SELECT * FROM users WHERE username = ?',
+        [username]
+    );
 
-  if (rows.length === 0) return false;
+    console.log(`Total de usuários encontrados com esse nome: ${rows.length}`);
+    if (rows.length === 0) return false;
 
-  const bcrypt = require('bcrypt');
+    console.log(`Hash armazenado no banco: ${rows[0].password}`);
+    const valid = await bcrypt.compare(password, rows[0].password);
+    console.log(`Bcrypt validation result: ${valid}`);
 
-  const valid = await bcrypt.compare(password, rows[0].password);
-
-  return valid;
+    return valid;
 }
 
 module.exports = { createUser, loginUser };

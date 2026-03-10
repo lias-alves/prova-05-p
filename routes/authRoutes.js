@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 
@@ -36,5 +37,35 @@ router.post('/login', async (req, res) => {
 router.get('/home', (req, res) => {
   res.render('home');
 });
+
+//eventos
+const { getEvents } = require('../models/eventModel');
+
+router.get('/home', async (req, res) => {
+
+  const eventos = await getEvents();
+
+  res.render('home', { eventos });
+
+});
+//fim
+
+// Página só de eventos
+router.get('/eventos', async (req,res) => {
+    const { nome } = req.query;
+
+    let eventos;
+    if(nome){
+        // pesquisa por nome
+        const { searchEvent } = require('../models/eventModel');
+        eventos = await searchEvent(nome);
+    } else {
+        const { getEvents } = require('../models/eventModel');
+        eventos = await getEvents();
+    }
+
+    res.render('eventos', { eventos, pesquisa: nome || '' });
+});
+//fim
 
 module.exports = router;
